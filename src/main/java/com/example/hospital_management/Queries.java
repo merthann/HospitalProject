@@ -63,8 +63,8 @@ CREATE TABLE Appointment (
     id SERIAL PRIMARY KEY,                   -- Auto-generated ID
     patientid UUID NOT NULL,                 -- Foreign key to Patient
     doctorid INT NOT NULL,                   -- Foreign key to Doctor
-    time INT NOT NULL,                       -- TimeSlot as an integer
-    date DATE NOT NULL,                      -- Appointment date
+    time TIME NOT NULL,          -- Proper time-based representation
+    date DATE NOT NULL,          -- Appointment date
     CONSTRAINT fk_patient FOREIGN KEY (patientid) 
         REFERENCES Patient(id)
         ON DELETE CASCADE 
@@ -74,6 +74,7 @@ CREATE TABLE Appointment (
         ON DELETE CASCADE 
         ON UPDATE CASCADE
 );
+
 
 	
 	CREATE TABLE Test (

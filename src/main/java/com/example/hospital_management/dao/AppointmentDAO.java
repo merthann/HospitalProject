@@ -1,13 +1,9 @@
 package com.example.hospital_management.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Repository;
 
@@ -48,10 +44,10 @@ public class AppointmentDAO {
     public void save(Appointment appointment) throws SQLException {
         String query = "INSERT INTO Appointment (patientid, doctorid, time, date) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, appointment.getPatientId());
+            statement.setObject(1, appointment.getPatientId(), Types.OTHER); // Set UUID as Object
             statement.setLong(2, appointment.getDoctorId());
-            statement.setInt(3, appointment.getAppointmentTime());
-            statement.setDate(4, Date.valueOf(appointment.getAppointmentDate()));
+            statement.setTime(3, Time.valueOf(appointment.getAppointmentTime())); // Set LocalTime
+            statement.setDate(4, Date.valueOf(appointment.getAppointmentDate())); // Set LocalDate
             statement.executeUpdate();
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
@@ -63,10 +59,10 @@ public class AppointmentDAO {
     public void update(Appointment appointment) throws SQLException {
         String query = "UPDATE Appointment SET patientid = ?, doctorid = ?, time = ?, date = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, appointment.getPatientId());
+            statement.setObject(1, appointment.getPatientId(), Types.OTHER); // Set UUID as Object
             statement.setLong(2, appointment.getDoctorId());
-            statement.setInt(3, appointment.getAppointmentTime());
-            statement.setDate(4, Date.valueOf(appointment.getAppointmentDate()));
+            statement.setTime(3, Time.valueOf(appointment.getAppointmentTime())); // Set LocalTime
+            statement.setDate(4, Date.valueOf(appointment.getAppointmentDate())); // Set LocalDate
             statement.setLong(5, appointment.getId());
             statement.executeUpdate();
         }
@@ -83,10 +79,10 @@ public class AppointmentDAO {
     private Appointment mapRowToAppointment(ResultSet resultSet) throws SQLException {
         Appointment appointment = new Appointment();
         appointment.setId(resultSet.getLong("id"));
-        appointment.setPatientId(resultSet.getLong("patientid"));
+        appointment.setPatientId(UUID.fromString(resultSet.getString("patientid"))); // Map UUID
         appointment.setDoctorId(resultSet.getLong("doctorid"));
-        appointment.setAppointmentTime(resultSet.getInt("time"));
-        appointment.setAppointmentDate(resultSet.getDate("date").toLocalDate());
+        appointment.setAppointmentTime(resultSet.getTime("time").toLocalTime()); // Map SQL Time to LocalTime
+        appointment.setAppointmentDate(resultSet.getDate("date").toLocalDate()); // Map SQL Date to LocalDate
         return appointment;
     }
 }

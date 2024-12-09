@@ -1,14 +1,14 @@
 package com.example.hospital_management.entities;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.UUID;
 
-import com.example.hospital_management.entities.base.BaseEntity;
-
-public class Appointment{
+public class Appointment {
     private long id;
-    private long patientId;
+    private UUID patientId;
     private long doctorId;
-    private int appointmentTime; // Assuming Enum as ordinal
+    private LocalTime appointmentTime;
     private LocalDate appointmentDate;
 
     // Getters and Setters
@@ -20,11 +20,11 @@ public class Appointment{
         this.id = id;
     }
 
-    public long getPatientId() {
+    public UUID getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(long patientId) {
+    public void setPatientId(UUID patientId) {
         this.patientId = patientId;
     }
 
@@ -36,11 +36,11 @@ public class Appointment{
         this.doctorId = doctorId;
     }
 
-    public int getAppointmentTime() {
+    public LocalTime getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(int appointmentTime) {
+    public void setAppointmentTime(LocalTime appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 

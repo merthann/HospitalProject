@@ -2,12 +2,17 @@ package com.example.hospital_management.entities;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Patient {
     private UUID id;
     private String fname;
     private String lname;
+    @JsonProperty("identityno")
     private long identityNo;
     private String email;
+    @JsonProperty("mobileno")
     private long mobileNo;
 
     // Getters and Setters

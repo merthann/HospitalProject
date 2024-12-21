@@ -36,6 +36,7 @@ public class MedicineDAO {
         }
     }
 
+
     // Get Medicine by ID
     public Medicine getById(long id) throws SQLException {
         String query = """
@@ -53,6 +54,7 @@ public class MedicineDAO {
         }
         return null;
     }
+
 
     // Get all Medicines
     public List<Medicine> getAll() throws SQLException {

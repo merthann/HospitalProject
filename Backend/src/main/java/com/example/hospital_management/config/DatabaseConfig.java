@@ -14,7 +14,7 @@ public class DatabaseConfig {
     public Connection connection() throws SQLException {
         String url = "jdbc:postgresql://localhost:5432/Hospital";
         String username = "postgres";
-        String password = "P801600302e"; // Replace with your PostgreSQL password
+        String password = "*****";
 
         return DriverManager.getConnection(url, username, password);
     }

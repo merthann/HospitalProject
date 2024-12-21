@@ -88,8 +88,17 @@ CREATE TABLE Medicine (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,          -- Name of the medicine
     description TEXT,                       -- Description of the medicine
-    category int NOT NULL         -- Enum (Category stored as text/string)
+    category int NOT NULL        
 );
+
+ALTER TABLE Medicine
+ADD CONSTRAINT fk_category
+FOREIGN KEY (category)
+REFERENCES Category(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
 
 
 	To look at medicines with the category names not the ids:

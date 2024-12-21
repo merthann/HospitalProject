@@ -34,12 +34,17 @@ public class AppointmentController {
     // POST: Create a new appointment
     @PostMapping
     public void createAppointment(@RequestBody Appointment appointment) throws SQLException {
+        if (appointment.getAppointmentTime() == null) {
+            throw new IllegalArgumentException("Appointment time cannot be null");
+        }
         appointmentService.createAppointment(appointment);
     }
 
     // PUT: Update an existing appointment
-    @PutMapping("/{id}")
     public void updateAppointment(@PathVariable long id, @RequestBody Appointment appointment) throws SQLException {
+        if (appointment.getAppointmentTime() == null) {
+            throw new IllegalArgumentException("Appointment time cannot be null");
+        }
         appointmentService.updateAppointment(id, appointment);
     }
 

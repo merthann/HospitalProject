@@ -81,8 +81,24 @@ public class AppointmentDAO {
         appointment.setId(resultSet.getLong("id"));
         appointment.setPatientId(UUID.fromString(resultSet.getString("patientid"))); // Map UUID
         appointment.setDoctorId(resultSet.getLong("doctorid"));
-        appointment.setAppointmentTime(resultSet.getTime("time").toLocalTime()); // Map SQL Time to LocalTime
-        appointment.setAppointmentDate(resultSet.getDate("date").toLocalDate()); // Map SQL Date to LocalDate
+
+        // Handle potential null value for "time"
+        Time time = resultSet.getTime("time");
+        if (time != null) {
+            appointment.setAppointmentTime(time.toLocalTime()); // Map SQL Time to LocalTime
+        } else {
+            appointment.setAppointmentTime(null); // Set as null if database value is null
+        }
+
+        // Handle potential null value for "date"
+        Date date = resultSet.getDate("date");
+        if (date != null) {
+            appointment.setAppointmentDate(date.toLocalDate()); // Map SQL Date to LocalDate
+        } else {
+            appointment.setAppointmentDate(null); // Set as null if database value is null
+        }
+
         return appointment;
     }
+
 }
